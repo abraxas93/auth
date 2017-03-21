@@ -1,0 +1,7 @@
+.vscode/
+typings/
+node_modules/
+temp/
+typings.json
+jsconfig.json
+.eslintrc.json
