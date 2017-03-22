@@ -1,7 +1,5 @@
-const http = require('http');
+const http = require('http'),
+    config = require('./config'),
+    app = require('./app');
 
-http.createServer((req, res) => {
-    console.log('server running');
-    res.write('Hello world');
-    res.end();
-}).listen(3000);
+http.createServer(app).listen(config.server.port, () => console.log(`Node app running on port: ${config.server.port}`));
