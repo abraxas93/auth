@@ -5,9 +5,8 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     cookieSession = require('cookie-session'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
     mongoose = require('mongoose'),
-    User = require('./dashboard/user/user'),
+    authentication = require('./authentication'),
     dashboard = require('./dashboard'),
     app = express();
 
@@ -25,31 +24,7 @@ app.use(bodyParser.json());
 
 // db connection string
 mongoose.connect(config.mongo.url);
-
-// passport
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
-});
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-      User.findOne({ username: username }, function(err, user) {
-          if (err) { return done(err); }
-          if (!user) {
-              return done(null, false, { message: 'Incorrect username.' });
-          }
-          if (!user.validPassword(password)) {
-              console.log('Incorrect');
-              return done(null, false, { message: 'Incorrect password.' });
-          }
-          return done(null, user);
-      });
-  }
-));
+authentication.init(passport);
 
 app.use(dashboard);
 
