@@ -1,11 +1,15 @@
 'use strict';
 
 const router = require('express').Router(),
-    api = require('./api');
+    passport = require('passport'),
+    user = require('./user');
 
-router.get('/dash', api.index);
-router.get('/dash/login', api.login);
-router.post('/dash/login', api.login);
-// router.get('/dash/logout', api.logout);
+router.get('/', user.list);
+router.get('/login', user.login);
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: false })
+);
 
 module.exports = router;
