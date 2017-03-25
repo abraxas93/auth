@@ -41,7 +41,7 @@ module.exports = {
             }
         });
     },
-    delete(req, res) {
+    delete(req, res) {        
         User.findById(req.params.id).remove((err) => {
             if (err) res.json(err);
             else {

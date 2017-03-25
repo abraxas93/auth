@@ -23,7 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // db connection string
-mongoose.connect(config.mongo.url);
+mongoose.connect(config.mongo.url, (err) => {
+    if (err) console.log(err);
+    console.log(`DB running on ${config.mongo.url}`);
+});
 // configure passport
 authentication.init(passport);
 
