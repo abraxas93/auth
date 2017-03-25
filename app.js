@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 
 // db connection string
 mongoose.connect(config.mongo.url);
+// configure passport
 authentication.init(passport);
 
 app.use(dashboard);

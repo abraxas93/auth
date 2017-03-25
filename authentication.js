@@ -37,5 +37,10 @@ function initialize(passport) {
         }
     ));
 }
+function isLogged(req, res, next) {
+    if (req.user) next();
+    else res.redirect('/login');
+}
 
-exports = module.exports.init = initialize;
+exports.init = initialize;
+exports.isLogged = isLogged;
