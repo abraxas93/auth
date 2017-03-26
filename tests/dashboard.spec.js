@@ -2,10 +2,9 @@ process.env.NODE_ENV = 'test';
 
 const chai = require('chai'),
     chaiHttp = require('chai-http'),
-    should = chai.should(),
-    mongoose = require('mongoose'),
-    User = require('../dashboard/user'),
-    server = require('../index.js');
+    should = chai.should(),    
+    User = require('../dashboard/user/user.js'),
+    app = require('../app.js');
 
 chai.use(chaiHttp);
 
@@ -26,15 +25,12 @@ let user3 = new User({
 });
 
 describe('Dashboard main routes', () => {
-    beforeEach((done) => { 
-        User.remove({}, (err) => { 
-            if (err) done(err);
-            done();
-        });     
+    beforeEach((done) => {   
+        User.remove({}, (err) => done());                
     });
     describe('/GET_login', () => {
         it('It should return string "Login form"', () => {
-            chai.request(server)
+            chai.request(app)
                 .get('/login')
                 .end((err, res) => {
                     res.should.have.status(200);
