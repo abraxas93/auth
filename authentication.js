@@ -39,7 +39,9 @@ function initialize(passport) {
 }
 function isLogged(req, res, next) {
     if (req.user) next();
-    else res.redirect('/login');
+    else {        
+        res.redirect('/login');
+    }
 }
 
 exports.init = initialize;

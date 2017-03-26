@@ -7,12 +7,12 @@ const router = require('express').Router(),
 
 router.get('/', authenticate.isLogged, user.list);
 router.get('/login', (req, res) => {
-    res.json({'msg': 'Login form'});
+    res.json({'msg': req.flash('error') || 'Login form'});
 });
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: false })
+    failureFlash: true })
 );
 router.get('/user/:id', user.read);
 router.post('/user/add', user.create);

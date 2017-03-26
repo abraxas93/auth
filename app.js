@@ -5,6 +5,7 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     cookieSession = require('cookie-session'),
     passport = require('passport'),
+    flash = require('connect-flash'),
     mongoose = require('mongoose'),
     authentication = require('./authentication'),
     dashboard = require('./dashboard'),
@@ -23,6 +24,7 @@ app.use(cookieSession({
     name: 'mysession',
     secret: 'pwspws'
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
