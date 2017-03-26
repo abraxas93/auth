@@ -10,7 +10,9 @@ const express = require('express'),
     dashboard = require('./dashboard'),
     app = express();
 
-app.use(logger('dev'));
+if(process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+}
 
 app.use(cookieParser());
 app.use(cookieSession({
