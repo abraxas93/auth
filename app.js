@@ -8,14 +8,9 @@ const express = require('express'),
     flash = require('connect-flash'),
     mongoose = require('mongoose'),
     authentication = require('./authentication'),
+    checkEnv = config.checkEnv,
     dashboard = require('./dashboard'),
     app = express();
-
-function checkEnv(fn) {
-    if(process.env.NODE_ENV !== 'test') {
-        fn();
-    }
-}
 
 
 checkEnv(() => app.use(logger('dev')));
