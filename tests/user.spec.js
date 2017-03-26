@@ -10,19 +10,6 @@ const chai = require('chai'),
 chai.use(chaiHttp);
 
 
-describe('Dashboard main routes', () => {
-    describe('/GET_login', () => {
-        it('It should return string "Login form"', () => {
-            chai.request(server)
-                .get('/login')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body('msg').should.equal('Login form');
-                });
-        });
-    });
-});
-
 describe('User', () => {
     
 });

@@ -52,4 +52,8 @@ app.use((err, req, res, next) => {
     });
 });
 
+app.listen(config.server.port, () => {
+    console.log(`Dashboard app running on port: ${config.server.port}. NODE_ENV: ${process.env.NODE_ENV}`)
+});
+
 module.exports = app;
