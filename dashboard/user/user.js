@@ -26,7 +26,7 @@ User.methods.generateHash = function(password) {
 };
 
 User.pre('save', function(next) {
-    console.log(crypto.createHash('md5').update('this.password').digest('hex'));
+    // console.log(crypto.createHash('md5').update('this.password').digest('hex'));
     next();
 });
 

@@ -25,7 +25,7 @@ let user3 = new User({
 });
 
 describe('Dashboard main routes', () => {
-    beforeEach((done) => {   
+    before((done) => {   
         User.remove({}, (err) => done());                
     });
     describe('/GET_login', () => {
@@ -37,5 +37,14 @@ describe('Dashboard main routes', () => {
                     res.body('msg').should.equal('Login form');
                 });
         });
+    });
+    describe('/POST_login', () => {
+
+    });
+    before((done) => {
+        user1.save(done());
+    });
+    describe('Index:"/"', () => {
+
     });
 });

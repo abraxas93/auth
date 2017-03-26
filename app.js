@@ -10,10 +10,14 @@ const express = require('express'),
     dashboard = require('./dashboard'),
     app = express();
 
-if(process.env.NODE_ENV !== 'test') {
-    app.use(logger('dev'));
+function checkEnv(fn) {
+    if(process.env.NODE_ENV !== 'test') {
+        fn();
+    }
 }
 
+
+checkEnv(() => app.use(logger('dev')));
 app.use(cookieParser());
 app.use(cookieSession({
     name: 'mysession',
@@ -27,7 +31,7 @@ app.use(bodyParser.json());
 // db connection string
 mongoose.connect(config.mongo.url, (err) => {
     if (err) console.log(err);
-    console.log(`DB running on ${config.mongo.url}`);
+    checkEnv(() => console.log(`DB running on ${config.mongo.url}`));
 });
 // configure passport
 authentication.init(passport);
@@ -53,9 +57,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(config.server.port, () => {
-    if(process.env.NODE_ENV !== 'test') {
-        console.log(`Dashboard app running on port: ${config.server.port}. NODE_ENV: ${process.env.NODE_ENV}`);
-    }    
+    checkEnv(() => console.log(`Dashboard app running on port: ${config.server.port}. NODE_ENV: ${process.env.NODE_ENV}`));   
 });
 
 module.exports = app;
