@@ -29,11 +29,10 @@ module.exports = {
     update(req, res) {
         User.findById(req.params.id, (err, user) => {
             if (err) res.json(err);
-            else {
-                user.username = req.body.username;
-                user.password = user.generateHash(req.body.password);
-                user.email = req.body.email;
-
+            else {                
+                user.username = req.body.username || user.username;
+                if (req.body.password) user.password = user.generateHash(req.body.password);                   
+                user.email = req.body.email || user.email;
                 user.save((err) => {
                     if (err) res.json(err);
                     else res.json(user);
@@ -42,10 +41,11 @@ module.exports = {
         });
     },
     delete(req, res) {        
-        User.findById(req.params.id).remove((err) => {
+        User.findById(req.params.id).remove((err, optResult) => {
             if (err) res.json(err);
             else {
-                res.json({msg: `user: ${req.params.id} succesfully removed from db`});
+                //res.json({msg: `user: ${req.params.id} succesfully removed from db`});
+                res.json(optResult.result);
             }
         });
     }

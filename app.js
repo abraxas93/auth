@@ -9,7 +9,7 @@ const express = require('express'),
     mongoose = require('mongoose'),
     authentication = require('./authentication'),
     checkEnv = config.checkEnv,
-    dashboard = require('./dashboard'),
+    dashboard = require('./dashboard'),   
     app = express();
 
 
@@ -58,7 +58,7 @@ app.use((err, req, res, next) => {
     }    
 });
 
-app.listen(config.server.port, () => {
+app.listen(config.server.port, () => {    
     checkEnv(() => console.log(`Dashboard app running on port: ${config.server.port}. NODE_ENV: ${process.env.NODE_ENV}`));   
 });
 
