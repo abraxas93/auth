@@ -1,67 +1,58 @@
 process.env.NODE_ENV = 'test';
 
-const chai = require('chai'),
-    chaiHttp = require('chai-http'),
+const chai = require('chai'),    
     expect = chai.expect,    
     User = require('../dashboard/user/user.js'),
-    app = require('../app.js');
+    app = require('../app.js'),
+    request = require('supertest'),
+    server = request.agent(app);
 
-chai.use(chaiHttp);
 
 let user1 = new User({
     username: 'user1',
     password: 'pwspws1',
     email: 'user1@mail.com'
 });
-let user2 = new User({
-    username: 'user2',
-    password: 'pwspws2',
-    email: 'user2@mail.com'
-});
-let user3 = new User({
-    username: 'user3',
-    password: 'pwspws3',
-    email: 'user3@mail.com'
-});
 
-describe('Dashboard main routes', () => {
+describe('DASHBOARD ROUTES', () => {
     before((done) => {   
         User.remove({}, (err) => done());                
     });
     describe('/GET_login', () => {
-        it('It should return string "Login form"', (done) => {            
-            chai.request(app)
+        it('response with json', done => {    
+            server
                 .get('/login')
-                .end((err, res) => {   
-                    expect(err).equal(null);
-                    expect(res).to.have.status(200);   
-                    expect(res.body.msg).equal('Login form');
-                    done();                 
+                .set('Accept','application/json')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end((err, res) => {                   
+                    if(err) return done(err);
+                    done();
                 });
         });
     });
-    describe('/POST_login', () => {
-
+    before((done) => {   
+        user1.save((err) => {
+            if(err) console.log(err);
+            done();
+        });                
     });
-    // before((done) => {
-    //     user1.save(done());
-    // });
-    // describe('Index:"/"', () => {
-    //     it('Should check or user is authorized',(done) => {
+    // describe('/POST_login', () => {
+    //     it('Checks incorrect user', (done) => {            
     //         chai.request(app)
-    //             .get('/')
-    //             .end((err, res) => {
-    //                 expect(err).equal(null);
-    //                 expect(res).to.have.status(200);
-    //                 expect(res.body.msg).equal('user is unauthorized');
-    //                 done();
+    //             .post('/login')
+    //             .send({username:'user1', password:'pwspws12'})
+    //             .end((err, res) => {     
+    //                 expect(err).equal(null);  
+    //                 console.log(res);
+    //                 console.log(res.status);
+    //                 done();           
     //             });
     //     });
-    //     it('Should return array of users', () => {
-
-    //     });
-    //     it('Should redirect to login page if unauthorized', () => {
-
-    //     });
-    // });
+    // });    
 });
+
+/* 
+* mocha tests/dashboard.spec.js --env NODE_ENV=test --timeout 10000 --no-deprecation
+*
+*/

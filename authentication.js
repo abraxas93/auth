@@ -26,8 +26,8 @@ function initialize(passport) {
                         message: 'Incorrect username.'
                     });
                 }
-                if (!user.validPassword(password)) {
-                    console.log('Incorrect');
+                if (!user.validPassword(password)) {        
+                    console.log('Wrong pass');           
                     return done(null, false, {
                         message: 'Incorrect password.'
                     });
