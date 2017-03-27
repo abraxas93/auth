@@ -16,8 +16,8 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: true })
 );
 router.get('/user/:id', user.read);
-router.post('/user/add', user.create);
-router.put('/user/edit/:id', user.update);
-router.get('/user/delete/:id', user.delete);
+router.post('/user', user.create);
+router.put('/user/:id', user.update);
+router.delete('/user/:id', user.delete);
 
 module.exports = router;
