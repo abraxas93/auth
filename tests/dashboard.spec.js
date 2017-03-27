@@ -20,7 +20,7 @@ describe('DASHBOARD ROUTES', () => {
     });
     describe('/GET_login', () => {
         it('response with json', done => {   
-            agent1 = request.agent(app); 
+            let agent1 = request.agent(app); 
 
             agent1
                 .get('/login')
@@ -45,7 +45,7 @@ describe('DASHBOARD ROUTES', () => {
     });
     describe('/POST_login', () => {
         it('checks incorrect username', done => {  
-            agent2 = request.agent(app);           
+            let agent2 = request.agent(app);           
 
             agent2
                 .post('/login')
@@ -58,7 +58,7 @@ describe('DASHBOARD ROUTES', () => {
                 });
         });
         it('checks incorrect password', done => {
-            agent3 = request.agent(app);           
+            let agent3 = request.agent(app);           
 
             agent3
                 .post('/login')
@@ -71,7 +71,7 @@ describe('DASHBOARD ROUTES', () => {
                 });
         });
         it('checks correct username and password', done => {
-            agent4 = request.agent(app);           
+            let agent4 = request.agent(app);           
 
             agent4
                 .post('/login')
@@ -83,6 +83,19 @@ describe('DASHBOARD ROUTES', () => {
                     done();
                 });
         });
-    });    
+    });  
+    describe('404', () => {
+        it('returns 404 error', done => {
+            let agent = request.agent(app);           
+
+            agent
+                .get('/unexisting')
+                .expect(404)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    })  
 });
 

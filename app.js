@@ -45,12 +45,17 @@ app.use((req, res, next) => {
     res.end();
 });
 
+// Handling all exception
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.send('error', {
-        message: err.message,
-        error: err
-    });
+    if(err.status = 404) {
+        res.end({error: err.message});
+    } else {
+        res.send('error', {
+            message: err.message,
+            error: err
+        });
+    }    
 });
 
 app.listen(config.server.port, () => {
