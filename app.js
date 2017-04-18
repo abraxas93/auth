@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 // Handling all exception
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    if(err.status = 404) {
+    if(err.status === 404) {
         res.end({error: err.message});
     } else {
         res.send('error', {
